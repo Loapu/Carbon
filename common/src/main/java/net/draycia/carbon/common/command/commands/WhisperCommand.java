@@ -170,9 +170,7 @@ public final class WhisperCommand extends CarbonCommand {
             }
 
             final String recipientUsername = recipient.username();
-            if (!this.network.online(recipient) || !sender.awareOf(recipient) &&
-                !sender.hasPermission("carbon.whisper.vanished")) {
-
+            if (!this.network.online(recipient) || !sender.awareOf(recipient) && !sender.hasPermission("carbon.whisper.vanished")) {
                 final var exception = new CarbonPlayerParser.ParseException(
                     recipientInputString == null ? recipientUsername : recipientInputString,
                     this.messages
@@ -201,8 +199,7 @@ public final class WhisperCommand extends CarbonCommand {
             final Component senderDisplayName = sender.displayName();
             final Component recipientDisplayName = recipient.displayName();
 
-            final CarbonPrivateChatEvent privateChatEvent = new CarbonPrivateChatEventImpl(sender,
-                recipient, Component.text(message));
+            final CarbonPrivateChatEvent privateChatEvent = new CarbonPrivateChatEventImpl(sender, recipient, Component.text(message));
             this.events.emit(privateChatEvent);
 
             if (privateChatEvent.cancelled()) {
@@ -212,17 +209,13 @@ public final class WhisperCommand extends CarbonCommand {
 
             final String senderUsername = sender.username();
 
-            this.messages.whisperSender(SourcedAudience.of(sender, sender), senderUsername, senderDisplayName,
-                recipientUsername, recipientDisplayName, privateChatEvent.message());
+            this.messages.whisperSender(SourcedAudience.of(sender, sender), senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, privateChatEvent.message());
             if (localRecipient) {
-                this.messages.whisperRecipient(SourcedAudience.of(sender, recipient), senderUsername,
-                    senderDisplayName, recipientUsername, recipientDisplayName, privateChatEvent.message());
+                this.messages.whisperRecipient(SourcedAudience.of(sender, recipient), senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, privateChatEvent.message());
             }
-            WhisperCommand.broadcastWhisperSpy(this.server, this.messages, senderUsername, senderDisplayName,
-                recipientUsername, recipientDisplayName, privateChatEvent.message());
+            WhisperCommand.broadcastWhisperSpy(this.server, this.messages, senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, privateChatEvent.message());
 
-            this.messages.whisperConsoleLog(this.server.console(), senderUsername, senderDisplayName,
-                recipientUsername, recipientDisplayName, privateChatEvent.message());
+            this.messages.whisperConsoleLog(this.server.console(), senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, privateChatEvent.message());
 
             final @Nullable Sound messageSound = this.configManager.primaryConfig().messageSound();
             if (localRecipient && messageSound != null) {
@@ -253,14 +246,10 @@ public final class WhisperCommand extends CarbonCommand {
                 final Component recipientDisplayName = recipient.displayName();
 
                 recipient.whisperReplyTarget(sender.uuid());
-                this.messages.whisperRecipient(SourcedAudience.of(sender, recipient), senderUsername,
-                    senderDisplayName, recipientUsername, recipientDisplayName, packet.message());
+                this.messages.whisperRecipient(SourcedAudience.of(sender, recipient), senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, packet.message());
 
-                WhisperCommand.broadcastWhisperSpy(this.server, this.messages, senderUsername, senderDisplayName,
-                    recipientUsername, recipientDisplayName, packet.message());
-
-                this.messages.whisperConsoleLog(this.server.console(), senderUsername, senderDisplayName,
-                    recipientUsername, recipientDisplayName, packet.message());
+                WhisperCommand.broadcastWhisperSpy(this.server, this.messages, senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, packet.message());
+                this.messages.whisperConsoleLog(this.server.console(), senderUsername, senderDisplayName, recipientUsername, recipientDisplayName, packet.message());
 
                 final @Nullable Sound messageSound = this.configManager.primaryConfig().messageSound();
                 if (messageSound != null) {
